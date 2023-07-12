@@ -4,6 +4,7 @@
 /dist
 .env.*
 redis-data/*
+mongo-data/*
 
 # Logs
 logs
