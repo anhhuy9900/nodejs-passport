@@ -2,8 +2,6 @@ FROM node:lts-alpine
 
 ARG ENVIRONMENT
 
-RUN apk add --no-cache python3 make g++
-
 ENV NODE_ENV=$ENVIRONMENT
 
 WORKDIR /home/node/nodejs-passport/src
