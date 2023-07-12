@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nodejs:
+    container_name: nodejs_passport_app
+    command: npm run start:dev
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3600:3600
+    volumes:
+      - ./:/home/node/nodejs-passport/
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: nodejs_passport_mongo
+    ports:
+      - 27020:27017
+    expose:
+      - 27020
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
