@@ -1,14 +1,15 @@
-import passportLocal from 'passport-local';
-import { User, UserSchema } from '../modules/user/user.model';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { UserModel, IUserDocument } from '../modules/user/user.model';
 import { comparePassword } from '../utils/password';
 
-export const LocalStrategy =  passportLocal.Strategy;
-
-const handleLocalStrategy =  async (email: string, password: string, done: any) => {
+export default new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+}, async (email: string, password: string, done: any) => {
     console.log("🚀 --------------------------------------------------------------------------🚀");
     console.log("🚀 handleLocalStrategy ~ email:", email, ', password: ', password);
 
-    const user: any = await UserSchema.findOne({ email });
+    const user = await UserModel.findOne({ email }) as IUserDocument;
 
     if (!user) {
         return done(null, false);
@@ -19,9 +20,4 @@ const handleLocalStrategy =  async (email: string, password: string, done: any) 
     }
 
     return done(null, user);
-}
-
-export default new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-}, handleLocalStrategy)
+})

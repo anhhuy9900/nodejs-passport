@@ -3,7 +3,11 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
 import mongoose, { ConnectOptions } from 'mongoose';
-import LocalStrategy from './lib/passport-local-strategy';
+import PassportLocalStrategy from './lib/passport-local';
+import PassportJwtStrategy from './lib/passport-jwt';
+import PassportHttpStrategy from './lib/passport-http';
+import PassportFacebookStrategy from './lib/passport-facebook';
+import PassportGoogleStrategy from './lib/passport-google';
 import { APP_PORT } from './config/constants';
 import Test from './modules/test';
 import Auth from './modules/auth';
@@ -36,7 +40,11 @@ import User from './modules/user'
     }));
     app.use(passport.initialize());
     app.use(passport.session());
-    passport.use(LocalStrategy);
+    passport.use(PassportLocalStrategy);
+    passport.use(PassportJwtStrategy);
+    passport.use(PassportHttpStrategy);
+    passport.use(PassportFacebookStrategy);
+    passport.use(PassportGoogleStrategy);
 
     passport.serializeUser((user, done) => {
         done(null, user);
